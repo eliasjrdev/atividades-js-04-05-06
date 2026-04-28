@@ -111,7 +111,7 @@ console.log('')
 // SUBIR A TORRE
 subirTorre(1, 5)
 
-//const pontos = Number(readline.question('Quantos pontos o jogador ganhou? '));
+
 
 
 
