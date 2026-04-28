@@ -1,4 +1,4 @@
-# 📦 Atividades JS 04, 05 e 06
+# Atividades JS 04, 05 e 06
 
 ## Sobre o Projeto
 
