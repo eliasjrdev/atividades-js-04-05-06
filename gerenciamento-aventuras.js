@@ -6,21 +6,51 @@ const missoes = [
     "Encontrar o tesouro perdido"
 ];
 
-
+// CRIAR O JOGADOR
 function criarJogador(nomeJogador, nivelJogador) {
     return {
         nome: nomeJogador,
-        nivel: nivelJogador
+        nivel: Number(nivelJogador)
     }
 }
 
+// CRIAR UM PERSONAGEM
+function Personagem(nome, classe, poder){
+    this.nome = nome;
+    this.classe = classe;
+    this.poder = poder;
 
-function mostrarJogador(jogador) {
-    console.log(`Jogador: ${jogador.nome} \n Nível: ${jogador.nivel}`)
-
+    this.atacar = function(){
+        console.log(`${this.nome}, o ${this.classe} ataca usando ${this.poder} !`);
+    };
 }
 
+// MOSTRAR O JOGADOR
+function mostrarJogador(jogador) {
+    console.log('Jogador criado com sucesso !');
+    console.log(`Jogador: ${jogador.nome} | Nível: ${jogador.nivel}`)
+}
 
+// lISTAR MISSÕES
+const listarMissoes = (missoes)=>{
+    console.log('')
+    console.log('MISSÕES DISPONÍVEIS PARA O JOGADOR: ')
+    missoes.forEach((missao, index) => {
+        
+        console.log(`${index + 1}. ${missao}`);
+    });
+}
+
+// EXECUTAR MISSÃO
+function executarMissao(jogador, missao, callback) {
+    console.log('')
+    console.log(`Missão "${missao}" concluída!`);
+
+    callback(jogador);
+    console.log('')
+}
+
+// ATUALIZAR PONTOS
 const atualizarPontos = (jogador, pontos) => {
     jogador.nivel = Number(jogador.nivel);
 
@@ -31,48 +61,72 @@ const atualizarPontos = (jogador, pontos) => {
     console.log(`Nível atual: ${jogador.nivel}`);
 }
 
-
-const listarMissoes = (missoes)=>{
-    missoes.forEach((missao, index) => {
-        
-        console.log(`${index + 1}. ${missao}`);
-    });
-}
-
-
-function executarMissao(jogador, missao, callback) {
-    console.log(`${jogador.nome} está executando a missão: ${missao}...`);
-
-    console.log(`Missão "${missao}" concluída!`);
-
-    callback(jogador);
-}
-
+// RECOMPENSA (BÔNUS)
 const recompensa = (jogador) => {
     const bonusPontos = 200;
 
-    console.log(`Parabéns, ${jogador.nome}! Você recebeu ${bonusPontos} pontos de bônus.`);
-
-    const niveisGanhos = Math.floor(bonusPontos / 100);
-    jogador.nivel += niveisGanhos;
-
-    console.log(`Novo nível: ${jogador.nivel}`);
+    atualizarPontos(jogador, bonusPontos);
 };
+ 
+// SUBIR TORRE
+function subirTorre(andarAtual, totalAndares){
+    if(andarAtual > totalAndares){
+        console.log('O personagem chegou ao topo da torre !')
+        return;
+    }
+
+    console.log(`Subindo para o andar ${andarAtual}...`)
+    subirTorre(andarAtual + 1, totalAndares);
+}
+
+
+// SIMULAÇÃO
 
 console.log('HORA DE CRIAR SEU JOGADOR !')
 const nome = readline.question('Informe um nome para o jogador: ')
 const nivel = readline.question('Informe o nivel do jogador: ')
 
 const jogador1 = criarJogador(nome, nivel);
-
 mostrarJogador(jogador1);
 
-const pontos = Number(readline.question('Quantos pontos o jogador ganhou? '));
+// CRIAR PERSONAGEM
+const pegarPersonagemNome = readline.question('Informe um nome para o Personagem: ');
+const pegarPersonagemClasse = readline.question('Informe uma categoria para o personagem: ');
+const pegarPersonagemPoder = readline.question('Informe um poder para o personagem: ');
 
-atualizarPontos(jogador1, pontos);
+const personagem1 = new Personagem(pegarPersonagemNome, pegarPersonagemClasse, pegarPersonagemPoder );
 console.log('')
-console.log('MISSÕES DO JOGADOR: ')
+
+// ATACAR
+personagem1.atacar()
+
+// LISTAR MISSÕES
 listarMissoes(missoes);
-console.log('')
+
+// EXECUTAR MISSÃO + RECOMPENSA + CALLBACK
 executarMissao(jogador1, missoes[1] , recompensa);
+console.log('')
+
+
+// SUBIR A TORRE
+subirTorre(1, 5)
+
+//const pontos = Number(readline.question('Quantos pontos o jogador ganhou? '));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
